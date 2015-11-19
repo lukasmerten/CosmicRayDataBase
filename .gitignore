@@ -1,8 +1,12 @@
 *.pyc
 *~
 *aux
-*bbl*blg
+*bbl
+*blg
 *log
 *run.xml
 *ppd
 *hdf5
+*pdf
+*blx.bib
+CRDB.tex

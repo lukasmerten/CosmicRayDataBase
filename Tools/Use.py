@@ -89,7 +89,6 @@ for j,i in enumerate(Experiment):
         if n>0:
             label=None
         if str(c)!='nan':
-            print F_up[n]
             plt.errorbar(E[n], F[n]*E[n]**weight, yerr=[[(F_low[n]**2.+F_stat[n]**2.)**0.5*E[n]**weight], [(F_up[n]**2.+F_stat[n]**2.)**0.5*E[n]**weight]], fmt=fmt, color=color, label=label)
         else:
             plt.errorbar([E[n]], [F[n]*E[n]**weight], [[F[n]*E[n]**weight*0.9],[0]], fmt=fmt, lolims=True, color=color, label=label)
