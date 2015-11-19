@@ -1,0 +1,6 @@
+*.pyc
+*~
+*aux
+*bbl*blg
+*log
+*run.xml
