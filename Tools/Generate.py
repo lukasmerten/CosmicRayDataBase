@@ -4,7 +4,7 @@ import h5py
 import cPickle
 
 #creating the hdf5 file
-target = h5py.File("CRDB.hdf5", 'w')
+target = h5py.File("../CRDB.hdf5", 'w')
 
 #key list for experiments
 Experiments = ["AUG09", "AUG11", "GAM", "HIRES1MONO", "HIRES2MONO", "HIRSTEREO", "HIRESMIA", "ICE", "KASQGS", "KASSIBYLL",
@@ -24,7 +24,7 @@ DataBase = {}
 #filling the database with data and metadata
 for n in Experiments:
     group = target.create_group(n)
-    data = np.genfromtxt(n+'.txt', names=True, dtype=float)
+    data = np.genfromtxt("../Data/"+n+'.txt', names=True, dtype=float)
     DATA = {"E":0, "F":0, "F_stat":0, "F_low":0, "F_up":0, "NOE":0} 
     METADATA = {"Legend":0, "Cite":0}
 
@@ -44,7 +44,7 @@ for n in Experiments:
     group.attrs["Legend"] = unicode(LegendDict[n])
     group.attrs["Cite"] = unicode(BibTexDict[n])
 
-with open("CRDB.ppd", 'w') as f:
+with open("../CRDB.ppd", 'w') as f:
     cPickle.dump(DataBase, f)
 
 target.close()
