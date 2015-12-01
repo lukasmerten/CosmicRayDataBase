@@ -62,7 +62,7 @@ saveTex = "../Examples/CRDB.tex"
 # Choose the experiments via the aforemantioned keys
 Experiment = ["PAMELA", "KASSIBYLL", "AUG11"]
 # Choose the weighting of the Flux dN/dE * E**weight
-weight = 3.0
+weight = 2.7
 # Choose the units
 unit = "eV"
 
@@ -91,7 +91,7 @@ for j,i in enumerate(Experiment):
         if str(c)!='nan':
             plt.errorbar(E[n], F[n]*E[n]**weight, yerr=[[(F_low[n]**2.+F_stat[n]**2.)**0.5*E[n]**weight], [(F_up[n]**2.+F_stat[n]**2.)**0.5*E[n]**weight]], fmt=fmt, color=color, label=label)
         else:
-            plt.errorbar([E[n]], [F[n]*E[n]**weight], [[F[n]*E[n]**weight*0.9],[0]], fmt=fmt, lolims=True, color=color, label=label)
+            plt.errorbar([E[n]], [F[n]*E[n]**weight], [F[n]*E[n]**weight*0.9], fmt=fmt, uplims=True, color=color, label=label)
     Citation.append(CRDB[i]["METADATA"]["Legend"])
     Citation.append(" --- \cite{")
     Citation.append(CRDB[i]["METADATA"]["Cite"])
