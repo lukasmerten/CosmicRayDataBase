@@ -25,7 +25,7 @@
 # HiRes/MIA                -- HIRESMIA
 # IceTop                   -- ICE
 # Kascade (QGSJet)         -- KASQGS
-# Kascade (Sibyll)         -- KASSYBILL
+# Kascade (Sibyll)         -- KASSIBYLL
 # Kascade (2005)           -- KAS05
 # KASCADE Grande (QGSJet2) -- GRANQGS2
 # PAMELA                   -- PAMELA
