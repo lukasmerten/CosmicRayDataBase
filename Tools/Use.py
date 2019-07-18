@@ -41,8 +41,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import cPickle
+import matplotlib.cm as cm
+#import seaborn as sns
 
 # Loading the Database as CRDB
+from typing import List, Any
+
 with open("../CRDB.ppd", 'r') as f:
     CRDB = cPickle.load(f)
 
@@ -56,25 +60,28 @@ UnitDict = {"eV":[1., "eV"], "keV":[1e3, "keV"], "MeV":[1e6, "MeV"]
 # user configuration
 
 # specify name and format for the plot
-savePlot = "../Examples/Plot.pdf"
+savePlot = "../Examples/Plot.png"
 # specify name and format for the tex file
 saveTex = "../Examples/CRDB.tex"
 # Choose the experiments via the aforemantioned keys
-Experiment = ["PAMELA", "KASSIBYLL", "AUG11"]
+Experiment = CRDB.keys() #['TIBETIII1', 'CAS', 'PAMELA_CATO']
 # Choose the weighting of the Flux dN/dE * E**weight
-weight = 2.7
+weight = 0.
 # Choose the units
 unit = "eV"
 
 ########################################################################
 #magic happens here
 markers = ['3', '4', '+', 'D', 'v', '1', 'h', '*', '<', '2', 's', 'H', 'x', 'p', '>', '.', 'd', '^']
-colors = ['b', 'g', 'y', 'k', 'r', 'c', 'm']
+#colors = ['b', 'g', 'y', 'k', 'r', 'c', 'm']
+colors = []
+for i, c in enumerate(Experiment):
+    colors.append(cm.viridis(i / float(len(Experiment)), 1))
 Unit = UnitDict[unit][0]
 UnitName = UnitDict[unit][1]
 Experiment_pyList = [] # list of experiment names as used in the legend
 Citation = []
-plt.figure()
+plt.figure(figsize=(12, 8))
 for j,i in enumerate(Experiment):
     E = CRDB[i]["DATA"]["E"]/Unit
     F = CRDB[i]["DATA"]["F"]*Unit
@@ -84,7 +91,9 @@ for j,i in enumerate(Experiment):
     label = CRDB[i]["METADATA"]["Legend"]
     wx, wy = str(weight), str(1-weight)
     fmt = markers[j%len(markers)]
-    color = colors[j%len(colors)]
+    #color = colors[j%len(colors)]
+    color = colors[j]
+    # color = sns.set_palette('dark', 20)
     for n, c in enumerate(F_up):
         if n>0:
             label=None
@@ -97,7 +106,7 @@ for j,i in enumerate(Experiment):
     Citation.append(CRDB[i]["METADATA"]["Cite"])
     Citation.append("}, ")
     Experiment_pyList.append(CRDB[i]["METADATA"]["Legend"])
-plt.legend(ncol=2, loc='best', fontsize=10)
+plt.legend(ncol=3, loc='best', fontsize=10)
 plt.loglog(nonposy='clip')
 plt.xlabel(r"$E\; [\mathrm{"+UnitName+"}]$", fontsize=14)
 plt.ylabel(r"$\mathrm{d}F/\mathrm{d}E\cdot E^{"+wx+"}\; [\mathrm{m^2\, sr\, s\, "+UnitName+"^{"+wy+"}]^{-1}}$", fontsize=14)
@@ -118,6 +127,3 @@ with open(saveTex, 'w') as f:
     +"\label{fig:CRDB}\n"
     +"\end{figure}"
     )
-
-
-
